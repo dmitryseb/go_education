@@ -14,9 +14,9 @@ func containsElement() {
 
 	for i := 0; i < n; i++ {
 		if a[i] == q {
-			fmt.Println("Contains Element")
+			fmt.Println("Contains Element", q)
 			return
 		}
 	}
-	fmt.Println("Not Contains Element")
+	fmt.Println("Not Contains Element", q)
 }
