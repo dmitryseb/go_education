@@ -1,11 +1,11 @@
 package main
 
-func findMinMax(a []int) (minn int, maxx int) {
-	minn = a[0]
-	maxx = a[0]
+func findMinMax(a []int) (minVal int, maxVal int) {
+	minVal = a[0]
+	maxVal = a[0]
 	for i := 1; i < len(a); i++ {
-		minn = min(minn, a[i])
-		maxx = max(maxx, a[i])
+		minVal = min(minVal, a[i])
+		maxVal = max(maxVal, a[i])
 	}
 	return
 }
