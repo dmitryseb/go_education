@@ -24,6 +24,7 @@ var h Handler
 func (s *server) DeleteAccountRequest(ctx context.Context, req *proto.DeleteAccount) (*proto.Status, error) {
 	h.guard.Lock()
 	if _, ok := h.accounts[req.Name]; !ok {
+		h.guard.Unlock()
 		return &proto.Status{Status: "account does not exist"}, nil
 	}
 	delete(h.accounts, req.Name)
