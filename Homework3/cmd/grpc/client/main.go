@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"strconv"
 	"time"
 )
 
@@ -57,7 +58,7 @@ func (c *Command) Do() error {
 }
 
 func (c *Command) create() error {
-	conn, err := grpc.NewClient("0.0.0.0:4567", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(c.Host+":"+strconv.Itoa(c.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return fmt.Errorf("create grpc client failed: %w", err)
 	}
@@ -82,7 +83,7 @@ func (c *Command) create() error {
 }
 
 func (c *Command) get() error {
-	conn, err := grpc.NewClient("0.0.0.0:4567", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(c.Host+":"+strconv.Itoa(c.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return fmt.Errorf("get grpc client failed: %w", err)
 	}
@@ -111,7 +112,7 @@ func (c *Command) get() error {
 }
 
 func (c *Command) delete() error {
-	conn, err := grpc.NewClient("0.0.0.0:4567", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(c.Host+":"+strconv.Itoa(c.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return fmt.Errorf("delete grpc client failed: %w", err)
 	}
@@ -136,7 +137,7 @@ func (c *Command) delete() error {
 }
 
 func (c *Command) changeAccount() error {
-	conn, err := grpc.NewClient("0.0.0.0:4567", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(c.Host+":"+strconv.Itoa(c.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return fmt.Errorf("change grpc client failed: %w", err)
 	}
@@ -161,7 +162,7 @@ func (c *Command) changeAccount() error {
 }
 
 func (c *Command) pathAccount() error {
-	conn, err := grpc.NewClient("0.0.0.0:4567", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(c.Host+":"+strconv.Itoa(c.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return fmt.Errorf("path grpc client failed: %w", err)
 	}
@@ -186,7 +187,7 @@ func (c *Command) pathAccount() error {
 }
 
 func main() {
-	portVal := flag.Int("port", 8080, "server port")
+	portVal := flag.Int("port", 4567, "server port")
 	hostVal := flag.String("host", "0.0.0.0", "server host")
 	cmdVal := flag.String("cmd", "", "command to execute")
 	nameVal := flag.String("name", "", "name of account")

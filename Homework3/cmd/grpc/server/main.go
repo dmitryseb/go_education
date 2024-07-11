@@ -49,7 +49,10 @@ func (s *server) ChangeAccountRequest(ctx context.Context, req *proto.ChangeAcco
 		h.guard.Unlock()
 		return &proto.Status{Status: "account does not exist"}, nil
 	}
-	h.accounts[req.Name] = &proto.Account{Name: req.NewName, Balance: account.Balance}
+	h.accounts[req.NewName] = &proto.Account{Name: req.Name, Balance: account.Balance}
+	if req.Name != req.NewName {
+		delete(h.accounts, req.Name)
+	}
 	h.guard.Unlock()
 	return &proto.Status{Status: ""}, nil
 }
