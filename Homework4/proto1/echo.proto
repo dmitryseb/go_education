@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option go_package = "AwesomeProject/proto1";
+
+package proto1;
+
+service Bank{
+  rpc GetAccountResponse(GetName) returns (Balance);
+  rpc CreateAccountRequest(CreateAccount)returns(Status);
+  rpc ChangeAccountRequest(ChangeAccount) returns(Status);
+  rpc PathAccountRequest(PathAccount) returns(Status);
+  rpc DeleteAccountRequest(DeleteAccount) returns(Status);
+}
+
+message Account{
+  string name = 1;
+  int64 balance = 2;
+}
+
+message GetName{
+  string name = 1;
+}
+
+message CreateAccount{
+  string name = 1;
+  int64 balance = 2;
+}
+
+message PathAccount{
+  string name = 1;
+  int64 balance = 2;
+}
+
+message ChangeAccount{
+  string name = 1;
+  string new_name = 2;
+}
+
+message DeleteAccount{
+  string name = 1;
+}
+
+message Status{
+  string status = 1;
+};
+
+message Balance{
+  int64 balance = 1;
+  string status = 2;
+}
