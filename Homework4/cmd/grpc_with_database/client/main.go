@@ -75,9 +75,6 @@ func (c *Command) create() error {
 	if err != nil {
 		return fmt.Errorf("create account failed: %w", err)
 	}
-	if res.Status == "" {
-		res.Status = "ok"
-	}
 	fmt.Println("status:", res.Status)
 	return nil
 }
@@ -100,9 +97,7 @@ func (c *Command) get() error {
 	if err != nil {
 		return fmt.Errorf("get account failed: %w", err)
 	}
-	if res.Status == "" {
-		res.Status = "ok"
-	} else {
+	if res.Status != "ok" {
 		fmt.Println("status:", res.Status)
 		return nil
 	}
@@ -129,9 +124,6 @@ func (c *Command) delete() error {
 	if err != nil {
 		return fmt.Errorf("delete account failed: %w", err)
 	}
-	if res.Status == "" {
-		res.Status = "ok"
-	}
 	fmt.Println("status:", res.Status)
 	return nil
 }
@@ -154,9 +146,6 @@ func (c *Command) changeAccount() error {
 	if err != nil {
 		return fmt.Errorf("change account failed: %w", err)
 	}
-	if res.Status == "" {
-		res.Status = "ok"
-	}
 	fmt.Println("status:", res.Status)
 	return nil
 }
@@ -178,9 +167,6 @@ func (c *Command) pathAccount() error {
 	res, err := con.PathAccountRequest(ctx, &proto1.PathAccount{Name: c.Name, Balance: int64(c.Amount)})
 	if err != nil {
 		return fmt.Errorf("path account failed: %w", err)
-	}
-	if res.Status == "" {
-		res.Status = "ok"
 	}
 	fmt.Println("status:", res.Status)
 	return nil
