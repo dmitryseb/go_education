@@ -117,6 +117,30 @@ func (s *server) ChangeAccountRequest(ctx context.Context, req *proto1.ChangeAcc
 	if len(accounts) > 1 {
 		return &proto1.Status{}, errors.New("multiple accounts found")
 	}
+
+	if err := db.Ping(); err != nil {
+		return &proto1.Status{Status: "bad connection with sql"}, err
+	}
+	rows, err = db.QueryContext(ctx, "SELECT name, balance FROM accounts where name = $1", req.NewName)
+	if err != nil {
+		return &proto1.Status{Status: "unable select from table"}, err
+	}
+	defer rows.Close()
+	accounts = nil
+	for rows.Next() {
+		var account proto1.Account
+		if err := rows.Scan(&account.Name, &account.Balance); err != nil {
+			return &proto1.Status{Status: "unable scan"}, err
+		}
+		accounts = append(accounts, &account)
+	}
+	if len(accounts) > 0 {
+		return &proto1.Status{Status: "there is another account with new name"}, nil
+	}
+	if len(accounts) > 1 {
+		return &proto1.Status{}, errors.New("multiple accounts found")
+	}
+
 	if _, err := db.Exec("UPDATE accounts SET name = $1 WHERE name = $2", req.NewName, req.Name); err != nil {
 		return &proto1.Status{Status: "unable update"}, err
 	}
